@@ -1,0 +1,26 @@
+page-widget-add {
+    ion-header {
+        ion-toolbar > .toolbar-background {
+            border-bottom: solid 2px color($colors, default, base) !important;
+        }
+        .sub-title > .toolbar-title {
+            text-align: center;
+            color: #000 !important;
+        }
+    }
+
+    ion-content {
+        .scroll-content {
+            background: color($colors, light);
+        }
+
+        .widget {
+            background: #fff;
+            padding: 5px;
+            height: 64px;
+            // align-content: center;
+            align-items: center;
+            display: flex;
+        }
+    }
+}

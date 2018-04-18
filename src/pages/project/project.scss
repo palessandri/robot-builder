@@ -1,0 +1,48 @@
+page-project {
+    ion-header {
+        ion-segment {
+            .segment-button {
+                max-width: 100% !important;
+                border: none !important;
+                height: 44px !important;
+                line-height: 4.4em !important;
+                color: rgba(0,0,0,.2) !important;
+            }
+
+            .segment-button.segment-activated {
+                background: color($colors, default, contrast) !important;
+                color: color($colors, default, base) !important;
+                border-bottom: solid 2px color($colors, default, base) !important;
+            }
+        }
+    }
+
+    ion-content {
+        .widgets {
+            text-align: center;
+            margin-top: 120px;
+            
+
+            button.add-widget {
+                background: rgba(0,0,0,.3);
+            }
+        }
+
+        .triggers {
+            margin-top: 120px;
+        }
+
+        .settings {
+            .delete-project {
+                position: fixed;
+                width: 100%;
+                padding: 8px;
+                bottom: 24px;
+    
+                button {
+                    border-radius: 5px;
+                }
+            }
+        }
+    }
+}

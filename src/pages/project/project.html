@@ -1,0 +1,65 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons end *ngIf="segment !== 'settings'">
+      <button ion-button (click)="addWidget()" icon-only clear>
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{project?.name}}</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="widgets">
+        <ion-icon name="speedometer"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="triggers">
+        <ion-icon name="play"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="settings">
+        <ion-icon name="settings"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div [ngSwitch]="segment">
+    <div *ngSwitchCase="'widgets'" class="widgets">
+      <p text-center>
+        No active widgets or sensors
+      </p>
+      <button ion-button (click)="addWidget()" icon-left round class="add-widget">
+        <ion-icon name="add"></ion-icon>
+        ADD
+      </button>
+    </div>
+    <div *ngSwitchCase="'triggers'" class="triggers" text-center>
+      <div>
+          <h6>No Triggers & Alerts yet</h6>
+          <p>No Triggers & Alerts yet</p>
+          <h4>Add New Triggers & Alerts</h4>
+      </div>
+    </div>
+    <div *ngSwitchCase="'settings'" class="settings">
+      <ion-list margin-top>
+        <ion-item>
+          <h4 item-start>
+            Name
+          </h4>
+          <p item-end>
+            {{project?.name}}
+          </p>
+        </ion-item>
+      </ion-list>
+      <div class="delete-project">
+        <button ion-button (click)="deleteProject()" color="danger" full>
+          Delete Project
+        </button>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
