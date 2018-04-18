@@ -15,6 +15,10 @@ page-project {
                 border-bottom: solid 2px color($colors, default, base) !important;
             }
         }
+
+        ion-toolbar {
+            min-height: 44px;
+        }
     }
 
     ion-content {

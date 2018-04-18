@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 
 // const baseUrl = 'http://localhost:8080/api';
-// const baseUrl = 'http://localhost:8100/api';    //proxy url
-const baseUrl = 'https://robot-builder.herokuapp.com/api';    //heroku url
+const baseUrl = 'http://localhost:8100/api';    //proxy url
+// const baseUrl = 'https://robot-builder.herokuapp.com/api';    //heroku url
 
 export abstract class ApiProvider {
   http: HttpClient;
