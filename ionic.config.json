@@ -2,11 +2,7 @@
   "name": "robot-builder",
   "app_id": "",
   "type": "ionic-angular",
-  "integrations": {},
-  "proxies": [
-    {
-      "path": "/api",
-      "proxyUrl": "https://robot-builder.herokuapp.com/api"
-    }
-  ]
+  "integrations": {
+    "cordova": {}
+  }
 }

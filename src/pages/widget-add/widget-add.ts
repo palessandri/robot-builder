@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { WidgetProvider } from '../../providers/widget/widget';
 
-/**
- * Generated class for the WidgetAddPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -14,12 +9,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'widget-add.html',
 })
 export class WidgetAddPage {
+  widgets: any;
+  projectId: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private navCtrl: NavController, private navParams: NavParams, private widgetProvider: WidgetProvider) {
+    this.projectId = this.navParams.get('projectId');
+
+    this.widgetProvider.widgtes.subscribe((widgets: any[]) => {
+      console.log(widgets);
+      this.widgets = widgets.filter(widget => widget.projectId !== this.projectId);
+    });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad WidgetAddPage');
+  selectWidget(widget: any) {
+    widget.projectId = this.projectId;
+    this.widgetProvider.updateDocument('widgets', widget._id, widget).subscribe((res) => {
+      console.log(res);
+      this.navCtrl.pop();
+    }, (error) => {
+      console.log(error);
+    });
   }
 
 }

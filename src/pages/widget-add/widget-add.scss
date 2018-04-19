@@ -16,11 +16,8 @@ page-widget-add {
 
         .widget {
             background: #fff;
-            padding: 5px;
-            height: 64px;
-            // align-content: center;
-            align-items: center;
-            display: flex;
+            border: solid 1px !important;
+            height: 54px;
         }
     }
 }

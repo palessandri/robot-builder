@@ -1,3 +1,23 @@
 page-project-add {
+    ion-list {
+        margin-bottom: 16px !important;
+  
+        ion-item:first-child {
+            padding-top: 24px !important;
+        }
 
+        ion-label[stacked] {
+            margin-bottom: 0 !important;
+        }
+
+        input.text-input, ion-datetime {
+            font-size: 14px !important;
+        }
+    }
+  
+    button.btn-create {
+        height: 2.4em;
+        padding: 0 2em;
+        background: color($colors, default, base);
+    }
 }

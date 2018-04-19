@@ -15,22 +15,24 @@
   <p padding-left>
     Custom Widgets
   </p>
-  <ion-row>
-    <ion-col text-center>
-      <div class="widget">
-        Value Display
-      </div>
-    </ion-col>
-    <ion-col text-center>
-      <div class="widget">
-        Line Chart
-      </div>
-    </ion-col>
-    <ion-col text-center>
-      <div class="widget">
-        Gauge
-      </div>
-    </ion-col>
-  </ion-row>
+  <ng-container *ngFor="let widget of widgets; let i=index">
+    <ion-row *ngIf="i%3 === 0">
+      <ion-col text-center>
+        <button ion-button color="dark" outline full (click)="selectWidget(widget)" class="widget">
+          {{widget.name}}
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button color="dark" outline full *ngIf="widgets[i+1]" (click)="selectWidget(widgets[i+1])" class="widget">
+          {{widgets[i+1].name}}
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button color="dark" outline full *ngIf="widgets[i+2]" (click)="selectWidget(widgets[i+2])" class="widget">
+          {{widgets[i+2].name}}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ng-container>
 
 </ion-content>

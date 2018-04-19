@@ -1,9 +1,12 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-buttons end *ngIf="segment !== 'settings'">
-      <button ion-button (click)="addWidget()" icon-only clear>
+    <ion-buttons end>
+      <button ion-button *ngIf="segment !== 'settings'" (click)="addWidget()" icon-only clear>
         <ion-icon name="add"></ion-icon>
+      </button>
+      <button ion-button *ngIf="segment === 'settings'" (click)="updateProject()" clear>
+        Save
       </button>
     </ion-buttons>
     <ion-title>{{project?.name}}</ion-title>
@@ -28,13 +31,26 @@
 <ion-content>
   <div [ngSwitch]="segment">
     <div *ngSwitchCase="'widgets'" class="widgets">
-      <p text-center>
-        No active widgets or sensors
-      </p>
-      <button ion-button (click)="addWidget()" icon-left round class="add-widget">
-        <ion-icon name="add"></ion-icon>
-        ADD
-      </button>
+      <ng-container *ngIf="!widgets || !widgets.length">
+        <p text-center>
+          No active widgets or sensors
+        </p>
+        <button ion-button (click)="addWidget()" icon-left round class="add-widget">
+          <ion-icon name="add"></ion-icon>
+          ADD
+        </button>
+      </ng-container>
+      <ion-list *ngIf="widgets" padding-top>
+        <ion-item-sliding *ngFor="let widget of widgets">
+          <ion-item>
+            {{widget.name}}
+          </ion-item>
+      
+          <ion-item-options side="right">
+            <button ion-button color="danger" (click)="removeWidget(widget)">Remove</button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
     </div>
     <div *ngSwitchCase="'triggers'" class="triggers" text-center>
       <div>
@@ -46,12 +62,8 @@
     <div *ngSwitchCase="'settings'" class="settings">
       <ion-list margin-top>
         <ion-item>
-          <h4 item-start>
-            Name
-          </h4>
-          <p item-end>
-            {{project?.name}}
-          </p>
+          <ion-label>Name</ion-label>
+          <ion-input placeholder="Project Name" [(ngModel)]="project.name"></ion-input>
         </ion-item>
       </ion-list>
       <div class="delete-project">

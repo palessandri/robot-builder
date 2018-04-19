@@ -16,6 +16,9 @@ export class HomePage {
     public navParams: NavParams,
     private projectProvider: ProjectProvider
   ) {
+  }
+
+  ionViewWillEnter() {
     this.initData();
   }
 
@@ -27,14 +30,14 @@ export class HomePage {
   }
 
   addProject() {
-    // this.navCtrl.push('ProjectAddPage');
-    this.projectProvider.addDocument('projects', {
-      name: `My Project ${this.projects.length + 1}`
-    }).subscribe((res) => {
-      this.initData();
-    }, (error) => {
-      console.log(error);
-    });
+    this.navCtrl.push('ProjectAddPage');
+    // this.projectProvider.addDocument('projects', {
+    //   name: `My Project ${this.projects.length + 1}`
+    // }).subscribe((res) => {
+    //   this.initData();
+    // }, (error) => {
+    //   console.log(error);
+    // });
   }
 
   goToProject(project: any) {

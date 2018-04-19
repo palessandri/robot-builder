@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { ProjectProvider } from '../../providers/project/project';
 
 /**
  * Generated class for the ProjectAddPage page.
@@ -14,12 +15,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'project-add.html',
 })
 export class ProjectAddPage {
+  project = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    private navCtrl: NavController, 
+    private navParams: NavParams, 
+    private loadingCtrl: LoadingController,
+    private projectProvider: ProjectProvider,
+  ) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProjectAddPage');
+  onCreate() {
+    const loading = this.loadingCtrl.create();
+    loading.present();
+    this.projectProvider.addDocument('projects', this.project).subscribe((res) => {
+      loading.dismiss();
+    });
   }
 
 }

@@ -13,11 +13,19 @@ export class WidgetProvider extends ApiProvider {
   }
 
   /**
+   * get widgets
+   * 
+   */
+  get widgtes() {
+    return this.getCollection('widgets');
+  }
+
+  /**
    * get widgets by projectId
    * 
    * @param projectId 
    */
-  getWidgets(projectId: string) {
+  getWidgetsByProjectId(projectId: string) {
     return this.getCollection('widgets', new HttpParams().set('project_id', projectId));
   }
 
