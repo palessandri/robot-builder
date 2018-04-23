@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 
@@ -9,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ProjectProvider } from '../providers/project/project';
 import { WidgetProvider } from '../providers/widget/widget';
+import { AuthProvider } from '../providers/auth/auth';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,7 @@ import { WidgetProvider } from '../providers/widget/widget';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -28,7 +31,8 @@ import { WidgetProvider } from '../providers/widget/widget';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ProjectProvider,
-    WidgetProvider
+    WidgetProvider,
+    AuthProvider
   ]
 })
 export class AppModule {}
