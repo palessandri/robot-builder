@@ -1,14 +1,15 @@
 <ion-menu [content]="content">
   <ion-content>
     <ion-list>
-      <ion-item no-lines>
-        <div class="text-avatar" item-start>
-          <h1>PA</h1>
-        </div>
-        <h2>Pedro Alessandri</h2>
-        <p>pedroalessandri@gmail.com</p>
-        <button ion-button clear icon-only item-end>
-          <ion-icon name="settings"></ion-icon>
+      <ion-item no-lines *ngIf="currentUser">
+        <ion-avatar item-start>
+          <img [src]="currentUser.picture">
+        </ion-avatar>
+        <h2>{{currentUser.nickname}}</h2>
+        <p>{{currentUser.name}}</p>
+        <button ion-button menuClose (click)="logout()" clear icon-only item-end>
+          <ion-icon name="exit"></ion-icon>
+          <!-- <ion-icon name="settings"></ion-icon> -->
         </button>
       </ion-item>
       <button menuClose ion-item icon-left detail-none no-lines *ngFor="let p of pages" (click)="openPage(p)">
