@@ -19,6 +19,11 @@ page-project {
         ion-toolbar {
             min-height: 44px;
         }
+
+        & > ion-toolbar {
+            height: 44px !important;
+            min-height: 44px !important;
+        }
     }
 
     ion-content {
