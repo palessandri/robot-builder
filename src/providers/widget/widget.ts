@@ -16,7 +16,7 @@ export class WidgetProvider extends ApiProvider {
    * get widgets
    * 
    */
-  get widgtes() {
+  get widgets() {
     return this.getCollection('widgets');
   }
 

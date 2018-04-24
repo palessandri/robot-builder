@@ -19,17 +19,20 @@
     <ion-row *ngIf="i%3 === 0">
       <ion-col text-center>
         <button ion-button color="dark" outline full (click)="selectWidget(widget)" class="widget">
-          {{widget.name}}
+          <img [src]="widget.imageURL">
+          <p>{{widget.name}}</p>
         </button>
       </ion-col>
       <ion-col text-center>
         <button ion-button color="dark" outline full *ngIf="widgets[i+1]" (click)="selectWidget(widgets[i+1])" class="widget">
-          {{widgets[i+1].name}}
+          <img [src]="widgets[i+1].imageURL">
+          <p>{{widgets[i+1].name}}</p>
         </button>
       </ion-col>
       <ion-col text-center>
         <button ion-button color="dark" outline full *ngIf="widgets[i+2]" (click)="selectWidget(widgets[i+2])" class="widget">
-          {{widgets[i+2].name}}
+          <img [src]="widgets[i+2].imageURL">
+          <p>{{widgets[i+2].name}}</p>
         </button>
       </ion-col>
     </ion-row>
