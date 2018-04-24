@@ -17,7 +17,11 @@ page-widget-add {
         .widget {
             background: #fff;
             border: solid 1px !important;
-            height: 54px;
+            height: 124px;
+
+            .button-inner {
+                display: block;
+            }
         }
     }
 }

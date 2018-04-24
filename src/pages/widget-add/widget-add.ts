@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { WidgetProvider } from '../../providers/widget/widget';
+import { ProjectProvider } from '../../providers/project/project';
 
 
 @IonicPage()
@@ -10,25 +11,40 @@ import { WidgetProvider } from '../../providers/widget/widget';
 })
 export class WidgetAddPage {
   widgets: any;
-  projectId: string;
+  project: any;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private widgetProvider: WidgetProvider) {
-    this.projectId = this.navParams.get('projectId');
+  constructor(
+    private navCtrl: NavController, 
+    private navParams: NavParams, 
+    private modalCtrl: ModalController, 
+    private widgetProvider: WidgetProvider,
+    private projectProvider: ProjectProvider
+  ) {
+    this.project = this.navParams.get('project');
 
-    this.widgetProvider.widgtes.subscribe((widgets: any[]) => {
-      console.log(widgets);
-      this.widgets = widgets.filter(widget => widget.projectId !== this.projectId);
+    this.widgetProvider.widgets.subscribe((widgets: any[]) => {
+      this.widgets = widgets.filter(widget => {
+        for (let i=0; i<this.project.widgets.length; i++) {
+          if (this.project.widgets[i]._id === widget._id)
+            return false;
+        }
+        return true;
+      });
     });
   }
 
   selectWidget(widget: any) {
-    widget.projectId = this.projectId;
-    this.widgetProvider.updateDocument('widgets', widget._id, widget).subscribe((res) => {
-      console.log(res);
-      this.navCtrl.pop();
-    }, (error) => {
-      console.log(error);
+    const modalCtrl = this.modalCtrl.create('SelectParamsPage', {widget: widget});
+    modalCtrl.onDidDismiss(widget => {
+      this.widgetProvider.updateDocument('widgets', widget._id, widget).subscribe(() => {
+        const project = Object.assign({}, this.project);
+        project.widget_id = widget._id;
+        this.projectProvider.updateDocument('projects', project._id, project).subscribe(() => {
+          this.navCtrl.pop();
+        });
+      });
     });
+    modalCtrl.present();
   }
 
 }

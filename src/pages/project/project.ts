@@ -11,7 +11,6 @@ import { WidgetProvider } from '../../providers/widget/widget';
 })
 export class ProjectPage {
   project: any;
-  widgets: any;
 
   segment = 'widgets';
 
@@ -24,30 +23,35 @@ export class ProjectPage {
     this.project = this.navParams.get('project');
   }
 
+  initData() {
+    this.projectProvider.getDocumentById('projects', this.project._id).subscribe(project => {
+      this.project = project;
+    });
+  }
+
   ionViewWillEnter() {
     this.initData();
   }
 
-  private initData() {
-    this.widgetProvider.getWidgetsByProjectId(this.project._id).subscribe(widgets => {
-      this.widgets = widgets;
-    });
-  }
-
   addWidget() {
-    this.navCtrl.push('WidgetAddPage', {projectId: this.project._id});
+    this.navCtrl.push('WidgetAddPage', {project: this.project});
   }
 
   removeWidget(widget: any) {
-    widget.projectId = null;
-    this.widgetProvider.updateDocument('widgets', widget._id, widget).subscribe((res) => {
+    const project = Object.assign({}, this.project);
+    project.widget_id = widget._id;
+    project.delete_widget = true;
+
+    this.projectProvider.updateDocument('projects', project._id, project).subscribe((res) => {
       this.initData();
+    }, (error) => {
+      console.log(error);
     });
   }
 
   updateProject() {
     this.projectProvider.updateDocument('projects', this.project._id, this.project).subscribe((res) => {
-      console.log(res);
+      this.initData();
     }, (error) => {
       console.log(error);
     });
