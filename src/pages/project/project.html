@@ -31,7 +31,7 @@
 <ion-content>
   <div [ngSwitch]="segment">
     <div *ngSwitchCase="'widgets'" class="widgets">
-      <ng-container *ngIf="!widgets || !widgets.length">
+      <ng-container *ngIf="!project.widgets || !project.widgets.length">
         <p text-center>
           No active widgets or sensors
         </p>
@@ -40,8 +40,8 @@
           ADD
         </button>
       </ng-container>
-      <ion-list *ngIf="widgets" padding-top>
-        <ion-item-sliding *ngFor="let widget of widgets">
+      <ion-list *ngIf="project.widgets" padding-top>
+        <ion-item-sliding *ngFor="let widget of project.widgets">
           <ion-item>
             {{widget.name}}
           </ion-item>
