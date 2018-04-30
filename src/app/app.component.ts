@@ -30,23 +30,6 @@ export class MyApp {
       { title: 'Devices',   component: 'HomePage', icon: 'phone-portrait' },
       { title: 'Community', component: 'HomePage', icon: 'chatbubbles' }
     ];
-
-    // get user profile
-    this.authProvider.getProfile().then(profile => {
-      this.currentUser = profile;
-    });
-
-    // update user profile after logged in
-    this.events.subscribe('logged-in', (res) => {
-      if (res.authResult) {
-        this.authProvider.getProfile(res.authResult.accessToken).then(profile => {
-          console.log(profile);
-          this.currentUser = profile;
-        }, (error) => {
-          console.log(error);
-        });
-      }
-    });
   }
 
   initializeApp() {
@@ -58,8 +41,11 @@ export class MyApp {
 
       this.authProvider.initAuth();
 
-      this.authProvider.isLoggedIn.then(authenticated => {
-        this.rootPage = authenticated ? this.rootPage : 'LoginPage';
+      this.authProvider.login().then((user) => {
+        this.currentUser = user;
+        console.log('logged in...', user);
+      }, (error) => {
+        console.log(error);
       });
     });
   }

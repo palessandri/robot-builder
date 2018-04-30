@@ -38,38 +38,38 @@ export class AuthProvider {
     };
 
     return new Promise((resolve, reject) => {
-      this.Client.authorize(options, (err, authResult) => {
+      this.Client.authorize(options, async (err, authResult) => {
         if (err) {
           reject(err);
         }
-
-        console.log(authResult);
 
         this.storage.set('access_token', authResult.accessToken);
         const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
         this.storage.set('expires_at', expiresAt);
 
-        resolve(authResult);
+        let profile = await this.getProfile(authResult.accessToken) 
+        resolve(profile);
       });
     });
   }
-
-  getProfile(accessToken?: string) {
-    if (!accessToken) {
-      return this.storage.get('profile');
-    }
-
+  
+  private getProfile(accessToken: string) {
     return new Promise((resolve, reject) => {
-      this.Auth0.client.userInfo(accessToken, (err, profile) => {
+      this.Auth0.client.userInfo(accessToken, async (err, profile) => {
         if (err) {
           reject(err);
         }
 
-        this.storage.set('profile', profile);
+        await this.storage.set('profile', profile);
         resolve(profile);
       });
-    })
+    });
   }
+
+  get currentUser() {
+    return this.storage.get('profile');
+  }
+
 
   get isLoggedIn() {
     return this.storage.get('expires_at').then(expires => {

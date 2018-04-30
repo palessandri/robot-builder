@@ -43,7 +43,10 @@
       <ion-list *ngIf="project.widgets" padding-top>
         <ion-item-sliding *ngFor="let widget of project.widgets">
           <ion-item>
-            {{widget.name}}
+            <ion-avatar item-start>
+              <img [src]="widget.imageURL">
+            </ion-avatar>
+            <p>{{widget.name}}</p>
           </ion-item>
       
           <ion-item-options side="right">

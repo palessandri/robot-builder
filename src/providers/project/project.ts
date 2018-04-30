@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiProvider } from '../api';
 
@@ -16,6 +16,15 @@ export class ProjectProvider extends ApiProvider {
    */
   get projects() {
     return this.getCollection('projects');
+  }
+
+  /**
+   * get projects by user
+   * 
+   * @param userId 
+   */
+  getProjectsByUser(userId: string) {
+    return this.getCollection('projects' , new HttpParams().set('userId', userId));
   }
 
   /**

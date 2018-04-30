@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { ProjectProvider } from '../../providers/project/project';
+import { AuthProvider } from '../../providers/auth/auth';
 
 
 @IonicPage()
@@ -10,11 +11,14 @@ import { ProjectProvider } from '../../providers/project/project';
 })
 export class HomePage {
   projects: any;
+  currentUser: any;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private projectProvider: ProjectProvider
+    private projectProvider: ProjectProvider,
+    private authProvider: AuthProvider,
+    private events: Events
   ) {
   }
 
@@ -23,21 +27,24 @@ export class HomePage {
   }
 
   private initData() {
-    this.projectProvider.projects
-      .subscribe(projects => {
-        this.projects = projects;
-      });
+    this.authProvider.currentUser.then(user => {
+      this.currentUser = user;
+
+      console.log('current user', user);
+
+      if (user && user.sub) {
+        this.projectProvider.getProjectsByUser(user.sub)
+          .subscribe(projects => {
+            this.projects = projects;
+          });
+      }
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   addProject() {
-    this.navCtrl.push('ProjectAddPage');
-    // this.projectProvider.addDocument('projects', {
-    //   name: `My Project ${this.projects.length + 1}`
-    // }).subscribe((res) => {
-    //   this.initData();
-    // }, (error) => {
-    //   console.log(error);
-    // });
+    this.navCtrl.push('ProjectAddPage', {userId: this.currentUser.sub});
   }
 
   goToProject(project: any) {

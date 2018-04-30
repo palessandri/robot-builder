@@ -5,7 +5,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-buttons end>
-      <button ion-button (click)="addProject()" icon-only clear>
+      <button ion-button [disabled]="!currentUser" (click)="addProject()" icon-only clear>
         <ion-icon name="add"></ion-icon>
       </button>
     </ion-buttons>
