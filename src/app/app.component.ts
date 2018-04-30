@@ -57,7 +57,6 @@ export class MyApp {
   }
 
   logout() {
-    this.nav.setRoot('LoginPage');
     this.authProvider.logout();
   }
 }

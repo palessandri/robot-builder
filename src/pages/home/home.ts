@@ -33,7 +33,7 @@ export class HomePage {
       console.log('current user', user);
 
       if (user && user.sub) {
-        this.projectProvider.getProjectsByUser(user.sub)
+        this.projectProvider.getProjectsByUser(user.name)
           .subscribe(projects => {
             this.projects = projects;
           });
@@ -44,7 +44,7 @@ export class HomePage {
   }
 
   addProject() {
-    this.navCtrl.push('ProjectAddPage', {userId: this.currentUser.sub});
+    this.navCtrl.push('ProjectAddPage', {userId: this.currentUser.name});
   }
 
   goToProject(project: any) {
