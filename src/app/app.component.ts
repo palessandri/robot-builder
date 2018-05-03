@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, Events } from 'ionic-angular';
+import { Nav, Platform, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthProvider } from '../providers/auth/auth';
@@ -11,7 +11,7 @@ import { AuthProvider } from '../providers/auth/auth';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = 'HomePage';
+  rootPage: any;
   currentUser: any;
 
   pages: Array<{title: string, component: any, icon: string}>;
@@ -20,7 +20,7 @@ export class MyApp {
     public platform: Platform, 
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
-    public events: Events,
+    public loadingCtrl: LoadingController,
     private authProvider: AuthProvider
   ) {
     this.initializeApp();
@@ -41,9 +41,13 @@ export class MyApp {
 
       this.authProvider.initAuth();
 
+      const loading = this.loadingCtrl.create();
+      loading.present();
+      
       this.authProvider.login().then((user) => {
         this.currentUser = user;
-        console.log('logged in...', user);
+        loading.dismiss();
+        this.rootPage = 'HomePage';
       }, (error) => {
         console.log(error);
       });
@@ -58,5 +62,6 @@ export class MyApp {
 
   logout() {
     this.authProvider.logout();
+    this.nav.setRoot('HomePage');
   }
 }

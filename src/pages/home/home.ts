@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProjectProvider } from '../../providers/project/project';
 import { AuthProvider } from '../../providers/auth/auth';
 
@@ -17,8 +17,7 @@ export class HomePage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private projectProvider: ProjectProvider,
-    private authProvider: AuthProvider,
-    private events: Events
+    private authProvider: AuthProvider
   ) {
   }
 
@@ -29,8 +28,6 @@ export class HomePage {
   private initData() {
     this.authProvider.currentUser.then(user => {
       this.currentUser = user;
-
-      console.log('current user', user);
 
       if (user && user.sub) {
         this.projectProvider.getProjectsByUser(user.name)
